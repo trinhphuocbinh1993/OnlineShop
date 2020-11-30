@@ -1,0 +1,115 @@
+﻿@model Model.EF.Contact
+@{
+    ViewBag.Title = "Liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section addedTopScript {
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBstr1q81mmc6GD8D49WTNDBd4K_dhsN1I"
+            defer></script>
+    <style>
+        /* Always set the map height explicitly to define the size of the div
+        * element that contains the map. */
+        #map {
+            height: 100%;
+        }
+        /* Optional: Makes the sample page fill the window. */
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+}
+<div class="content">
+
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Thông tin liên hệ</h2>
+            @Html.Raw(Model.Content)
+            <hr/>
+            <h2>Gửi thông tin</h2>
+            <form>
+                <div class="form-group">
+                    <label>Họ tên</label>
+                    <input type="text" id="txtName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Điện thoại</label>
+                    <input type="text" id="txtPhone" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ</label>
+                    <input type="text" id="txtAddress" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="txtEmail" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label>Yêu cầu</label>
+                    <textarea id="txtContent" class="form-control"></textarea>
+                </div>
+                <button id="btnSend" class="btn btn-success">Gửi đi</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <h2>Bản đồ</h2>
+            <div class="map" id="mapCanvas"></div>
+        </div>
+    </div>
+</div>
+
+@section addedBottomScript {
+    <script src="/Assets/client/js/controller/contactController.js"></script>
+    <script>
+        // This example displays a marker at the center of Australia.
+        // When the user clicks the marker, an info window opens.
+        function initMap() {
+            const uluru = { lat: -25.363, lng: 131.044 };
+            const map = new google.maps.Map($("#mapCanvas"), {
+                zoom: 4,
+                center: uluru,
+            });
+            const contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
+                '<div id="bodyContent">' +
+                "<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large " +
+                "sandstone rock formation in the southern part of the " +
+                "Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) " +
+                "south west of the nearest large town, Alice Springs; 450&#160;km " +
+                "(280&#160;mi) by road. Kata Tjuta and Uluru are the two major " +
+                "features of the Uluru - Kata Tjuta National Park. Uluru is " +
+                "sacred to the Pitjantjatjara and Yankunytjatjara, the " +
+                "Aboriginal people of the area. It has many springs, waterholes, " +
+                "rock caves and ancient paintings. Uluru is listed as a World " +
+                "Heritage Site.</p>" +
+                '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">' +
+                "https://en.wikipedia.org/w/index.php?title=Uluru</a> " +
+                "(last visited June 22, 2009).</p>" +
+                "</div>" +
+                "</div>";
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+            const marker = new google.maps.Marker({
+                position: uluru,
+                map,
+                title: "Uluru (Ayers Rock)",
+            });
+            marker.addListener("click", () => {
+                infowindow.open(map, marker);
+            });
+        }
+
+              //  new google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+
+
+}

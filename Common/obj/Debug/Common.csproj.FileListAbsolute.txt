@@ -1,0 +1,6 @@
+C:\Binh\Projects\OnlineShop\Common\bin\Debug\Common.dll
+C:\Binh\Projects\OnlineShop\Common\bin\Debug\Common.pdb
+C:\Binh\Projects\OnlineShop\Common\obj\Debug\Common.csprojAssemblyReference.cache
+C:\Binh\Projects\OnlineShop\Common\obj\Debug\Common.csproj.CoreCompileInputs.cache
+C:\Binh\Projects\OnlineShop\Common\obj\Debug\Common.dll
+C:\Binh\Projects\OnlineShop\Common\obj\Debug\Common.pdb

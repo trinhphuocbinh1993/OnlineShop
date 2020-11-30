@@ -1,0 +1,20 @@
+﻿@model List<Model.EF.ProductCategory>
+
+
+@foreach (var item in Model.Where(x => x.ParentID == null))
+{
+    var child = Model.Where(x => x.ParentID == item.ID);
+    var parentClass = child.Count() > 0 ? "class=dropdown-toggle data-toggle=dropdown" : "";
+    <li class="dropdown">
+        <a href="/san-pham/@item.MetaTitle-@item.ID" @parentClass>@item.Name</a>
+        @if (child.Count() > 0)
+        {
+            <ul class="dropdown-menu">
+                @foreach (var item1 in child)
+                {
+                    <li><a href="/san-pham/@item1.MetaTitle-@item1.ID">@item1.Name</a></li>
+                }
+            </ul>
+        }
+    </li>
+}
