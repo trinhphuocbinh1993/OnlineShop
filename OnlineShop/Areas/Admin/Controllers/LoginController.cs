@@ -22,7 +22,7 @@ namespace OnlineShop.Areas.Admin.Controllers
             {
                 var dao = new UserDao();
 
-                var res = dao.Login(model.UserName, Encryptor.EncMD5(model.Password));
+                var res = dao.Login(model.UserName, Encryptor.EncMD5(model.Password), true);
                 if(res == 1)
                 {
                     var user = dao.GetById(model.UserName);
@@ -30,14 +30,17 @@ namespace OnlineShop.Areas.Admin.Controllers
                     var userSession = new UserLogin
                     {
                         UserID = user.ID,
-                        UserName = user.UserName
+                        UserName = user.UserName,
+                        GroupID = user.GroupID
                     };
 
+                    var listCredentials = dao.GetListCredential(model.UserName);
+                    Session.Add(CommonConstants.SESSION_CREDENTIALS, listCredentials);
                     Session.Add(CommonConstants.USER_SESSION, userSession);
                     return RedirectToAction("Index", "Home");
                 } else if (res == 0)
                 {
-                    ModelState.AddModelError("", "Tài khoản không tồn tại");
+                    ModelState.AddModelError("", "Tài khoản không tồn tại"); 
                      
                 } else if (res == -1)
                 {
@@ -45,6 +48,10 @@ namespace OnlineShop.Areas.Admin.Controllers
                 } else if (res == -2)
                 {
                     ModelState.AddModelError("", "Mật khẩu không đúng");
+                }
+                else if (res == -3)
+                {
+                    ModelState.AddModelError("", "Tài khoản của bạn không có quyền đăng nhập");
                 }
                 else
                 {
@@ -54,6 +61,13 @@ namespace OnlineShop.Areas.Admin.Controllers
             }
             return View("Index");
            
+        }
+
+        // Logout
+        public ActionResult Logout()
+        {
+            Session[CommonConstants.USER_SESSION] = null;
+            return Redirect("/Admin/Login");
         }
     }
 }

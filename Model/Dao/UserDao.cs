@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common;
 
 namespace Model.Dao
 {
@@ -32,11 +33,12 @@ namespace Model.Dao
                 db.Users.Add(entity);
                 db.SaveChanges();
                 return entity.ID;
-            } else
+            }
+            else
             {
                 return user.ID;
             }
-            
+
         }
 
         public bool Update(User entity)
@@ -60,7 +62,7 @@ namespace Model.Dao
             {
                 return false;
             }
-           
+
         }
         public IEnumerable<User> ListAllPaging(string searchString, int page, int pageSize)
         {
@@ -80,25 +82,74 @@ namespace Model.Dao
         {
             return db.Users.Find(id);
         }
-        public int Login(string userName, string password)
+
+        public List<string> GetListCredential(string userName)
+        {
+            var user = db.Users.Single(x => x.UserName == userName);
+            var data = (from a in db.Credentials
+                       join b in db.UserGroups on a.UserGroupID equals b.ID
+                       join c in db.Roles on a.RoleID equals c.ID
+                       where b.ID == user.GroupID
+                       select new
+                       {
+                           RoleID = a.RoleID,
+                           UserGroupID = a.UserGroupID
+                       }).AsEnumerable().Select(x => new Credential() {
+                           RoleID = x.RoleID,
+                           UserGroupID = x.UserGroupID
+                       });
+            return data.Select(x => x.RoleID).ToList();
+        }
+        public int Login(string userName, string password, bool isLoginAdmin = false)
         {
             var result = db.Users.SingleOrDefault(x => x.UserName == userName);
-            if(result == null)
+            if (result == null)
             {
                 return 0;
-            } else
+            }
+            else
             {
-                if (result.Status == false)
+                if (isLoginAdmin == true)
                 {
-                    return -1;
-                } else
+                    if (result.GroupID == CommonConstants.ADMIN_GROUP || result.GroupID == CommonConstants.MOD_GROUP)
+                    {
+                        if (result.Status == false)
+                        {
+                            return -1;
+                        }
+                        else
+                        {
+                            if (result.Password == password)
+                            {
+                                return 1;
+                            }
+                            else
+                            {
+                                return -2;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return -3;
+                    }
+                }
+                else
                 {
-                    if(result.Password == password)
+                    if (result.Status == false)
                     {
-                        return 1;
-                    } else
+                        return -1;
+                    }
+                    else
                     {
-                        return -2;
+                        if (result.Password == password)
+                        {
+                            return 1;
+                        }
+                        else
+                        {
+                            return -2;
+                        }
                     }
                 }
             }
@@ -112,11 +163,12 @@ namespace Model.Dao
                 db.Users.Remove(user);
                 db.SaveChanges();
                 return true;
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 return false;
             }
-            
+
         }
         public bool ChangeStatus(long id)
         {
@@ -126,7 +178,7 @@ namespace Model.Dao
             return user.Status;
         }
 
-        public bool CheckUserName (string userName)
+        public bool CheckUserName(string userName)
         {
             return db.Users.Count(x => x.UserName == userName) > 0;
         }

@@ -24,7 +24,7 @@ namespace OnlineShop.Controllers
             return View();
         }
 
-        [ChildActionOnly]
+        //[ChildActionOnly]
         [OutputCache(Duration = 3600 * 24)]
         public ActionResult MainMenu()
         {
@@ -33,7 +33,7 @@ namespace OnlineShop.Controllers
             return PartialView(model);
         }
 
-        [ChildActionOnly]
+        //[ChildActionOnly]
         [OutputCache(Duration = 3600 * 24)]
         public ActionResult TopMenu()
         {
@@ -41,7 +41,7 @@ namespace OnlineShop.Controllers
 
             return PartialView(model);
         }
-        [ChildActionOnly]
+        //[ChildActionOnly]
         [OutputCache(Duration = 3600 * 24)]
         public ActionResult Footer()
         {
@@ -51,7 +51,7 @@ namespace OnlineShop.Controllers
         }
 
         //render partial view cho Header Cart
-        [ChildActionOnly]
+        //[ChildActionOnly]
         public PartialViewResult HeaderCart()
         {
             var cart = Session[CommonConstants.CART_SESSION];

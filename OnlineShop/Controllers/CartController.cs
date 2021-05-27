@@ -1,7 +1,6 @@
 ﻿using Common;
 using Model.Dao;
 using Model.EF;
-using OnlineShop.Common;
 using OnlineShop.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CommonConstants = OnlineShop.Common.CommonConstants;
 
 namespace OnlineShop.Controllers
 {

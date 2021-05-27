@@ -1,0 +1,89 @@
+﻿@using PagedList.Mvc;
+@model IEnumerable<Model.ViewModel.ProductViewModel>
+
+@{
+    var list = (PagedList.IPagedList<Model.ViewModel.ProductViewModel>)ViewBag.ListModel;
+    ViewBag.Title = "Kết quả tìm kiếm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="content_top">
+    <div class="heading">
+        <h3>Kết quả tìm kiếm với từ khóa: @ViewBag.Keyword</h3>
+    </div>
+    <div class="see">
+        <p><a href="#">See all Products</a></p>
+    </div>
+    <div class="clear"></div>
+</div>
+<!-- Topbar Search -->
+@using (Html.BeginForm("Category", "Product", FormMethod.Get, new { @class = "form-inline my-2", @style = "float: right" }))
+{
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="Tìm kiếm" aria-label="Search" aria-describedby="basic-addon2" value="@ViewBag.Keyword" name="searchString">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+}
+<div class="section group">
+    @foreach (var item in Model)
+    {
+
+        <div class="grid_1_of_4 images_1_of_4">
+            <a href="/chi-tiet/@item.MetaTitle-@item.ID"><img src="@item.Image" alt="@item.Name"></a>
+            <h2>@item.Name</h2>
+            <p>@item.CateName</p>
+            <div class="price-details">
+                <div class="price-number">
+                    <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") + " đ" : "Liên hệ")</span></p>
+                </div>
+                <div class="add-cart">
+                    <h4><a href="/gio-hang/@item.ID">Thêm vào giỏ</a></h4>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+        </div>
+    }
+</div>
+
+<!-- Thêm mã phân trang -->
+<br />
+<div class="row">
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6">
+        @using (Html.BeginForm("Category", "Product", FormMethod.Get))
+        {
+            <div class="form-group row">
+                <label class="col-sm-6 col-xs-6 col-form-label">Số sản phẩm hiển thị:</label>
+                <div class="col-sm-6 col-xs-6">
+                    @Html.DropDownList("size", (List<SelectListItem>)ViewBag.size, new { @onchange = "this.form.submit();", @class = "form-control form-control-sm" })
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-6 col-lg-6 col-xs-6 col-sm-6 text-right">
+        Trang @(list.PageCount < list.PageNumber ? 0 : list.PageNumber) / @list.PageCount
+    </div>
+</div>
+
+@Html.PagedListPager(list, page => Url.Action(ViewBag.Keyword, "tim-kiem?keyword=", new { page, size = ViewBag.currentSize }),
+    new PagedListRenderOptions
+    {
+        LiElementClasses = new List<string> { "page-item" },
+        UlElementClasses = new List<string> { "pagination" },
+        LinkToNextPageFormat = "&rarr;",
+        LinkToPreviousPageFormat = "&larr;",
+        FunctionToTransformEachPageLink = (liTag, aTag) =>
+        {
+            aTag.Attributes.Add("data-page-no", aTag.InnerHtml);
+            aTag.Attributes.Add("class", "page-link");
+            liTag.InnerHtml = aTag.ToString();
+            return liTag;
+        }
+    })
+
+<!-- Kết thúc -->

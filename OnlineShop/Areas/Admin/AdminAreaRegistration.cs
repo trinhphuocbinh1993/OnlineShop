@@ -20,6 +20,13 @@ namespace OnlineShop.Areas.Admin
                 new { action = "Index", id = UrlParameter.Optional },
                 namespaces: new string[] { "OnlineShop.Areas.Admin.Controllers" }
             );
+            context.MapRoute(
+                name: "Logout",
+                url: "Admin/{controller}/{action}/{id}",
+                new { controller = "Login", action = "Logout", id = UrlParameter.Optional },
+                namespaces: new string[] { "OnlineShop.Areas.Admin.Controllers" }
+            );
+
         }
     }
 }

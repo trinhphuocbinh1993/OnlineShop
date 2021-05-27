@@ -17,3 +17,5 @@ C:\Binh\Projects\OnlineShop\Model\bin\Debug\PagedList.Mvc.xml
 C:\Binh\Projects\OnlineShop\Model\bin\Debug\StaticResource.dll
 C:\Binh\Projects\OnlineShop\Model\bin\Debug\StaticResource.pdb
 C:\Binh\Projects\OnlineShop\Model\bin\Debug\en\StaticResource.resources.dll
+C:\Binh\Projects\OnlineShop\Model\bin\Debug\Common.dll
+C:\Binh\Projects\OnlineShop\Model\bin\Debug\Common.pdb

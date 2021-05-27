@@ -7,18 +7,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Free Home Shoppe Website Template | Home :: w3layouts</title>
+    <title>DỤNG CỤ CHỢ LỚN</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="/Assets/client/css/bootstrap.css" rel="stylesheet" />
     <link href="/Assets/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/Assets/client/css/slider.css" rel="stylesheet" type="text/css" media="all" />
     <link href="/Assets/admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/Assets/client/css/jquery-ui.css" rel="stylesheet" />
+    <link rel="icon" href="~/Assets/client/images/favicon.png">
 
-    <script type="text/javascript" src="/Assets/client/js/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="/Assets/client/js/jquery-1.12.4.js"></script>
+    @*<script type="text/javascript" src="/Assets/client/js/jquery-3.5.1.min.js"></script>*@
     <script src="/Assets/client/js/bootstrap.bundle.min.js"></script>
 
-    <script type="text/javascript" src="/Assets/client/js/jquery-1.7.2.min.js"></script>
+    @*<script type="text/javascript" src="/Assets/client/js/jquery-1.7.2.min.js"></script>*@
     <script type="text/javascript" src="/Assets/client/js/move-top.js"></script>
     <script type="text/javascript" src="/Assets/client/js/easing.js"></script>
     <script type="text/javascript" src="/Assets/client/js/startstop-slider.js"></script>
@@ -33,7 +36,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
             <div class="header_top">
                 <div class="logo">
-                    <a href="/" rel="nofollow"><img src="/Assets/client/images/logo.png" alt="" /></a>
+                    <a href="/" rel="nofollow"><img src="/Assets/client/images/logo1.png" alt="" /></a>
                 </div>
                 @{Html.RenderAction("HeaderCart", "Home"); }
                 <script type="text/javascript">
@@ -70,7 +73,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 @{Html.RenderAction("MainMenu", "Home");}
                 <div class="search_box">
                     <form action="/tim-kiem" method="get">
-                        <input id="txtKeyword" placeholder="Gõ từ khóa" type="text" onfocus="" onblur=""><input type="submit" value="">
+                        <input id="txtKeyword" name="keyword" placeholder="Gõ từ khóa" type="text" onfocus="" onblur=""><input type="submit" value="">
                     </form>
                 </div>
                 <div class="clear"></div>
@@ -91,7 +94,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         });
     </script>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>
-
+    <script src="~/Assets/client/js/jquery-ui.js"></script>
+    <script src="/Assets/client/js/controller/baseController.js"></script>
     @RenderSection("addedBottomScript", required: false)
 
 </body>
